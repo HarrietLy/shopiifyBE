@@ -1,7 +1,7 @@
 # shopiifyBE
 
 
-This is the BE code built in Django Framework.
+This is the BE code built in Django Framework for shopiify, an groceries shopping app
 
 1. User can register and account using email and password 
 2. User can log in/log out using email, password
