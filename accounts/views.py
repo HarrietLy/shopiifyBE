@@ -5,8 +5,9 @@ from django.shortcuts import render, redirect
 from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import UserSerializer, TokenSerializer
+from .serializers import UserSerializer, TokenSerializer, AddressSerializer
 from django.contrib.auth.models import User
+from .models import Address
 from django.contrib.auth import authenticate, login
 
 # JWT settings
@@ -25,7 +26,7 @@ class LoginView(generics.ListCreateAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
-
+    #overriding parent's post methods
     def post(self, request, *args, **kwargs):
         username = request.data.get("username", "")
         password = request.data.get("password", "")
@@ -84,6 +85,7 @@ class UserView(APIView):
         return Response(serializer.data)
 
 
+
 #LogoutView
 # class LogoutView(APIView):
 #     permission_classes=(permissions.IsAuthenticated,)
@@ -98,3 +100,27 @@ class UserView(APIView):
 #         token = RefreshToken(token=refresh_token)
 #         token.blacklist()
 #         return Response({"status": "ok"})
+
+#get and post routes for each user
+# class GetAddressView(APIView):
+#     def get(self,request, user_id):
+#         try:
+#             address = Address.objects.get(user_id = user_id)
+#         except:
+#             return Response({"status":"not ok"})
+#         serializer = AddressSerializer(address)
+#         return Response(serializer.data)
+
+        
+#get  post routes for  all address
+class ListAddressView(generics.ListCreateAPIView):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
+
+
+#get, put, delete route for each address
+class DetailAddressView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Address.objects.all()
+    serializer_class = AddressSerializer
+
+
