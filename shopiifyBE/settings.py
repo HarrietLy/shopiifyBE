@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'accounts',
     'products',
     'orders',
-    'carts'
+    'carts',
+    'corsheaders',
 ]
 
 #for JWT authentication
@@ -89,12 +90,15 @@ SIMPLE_JWT = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True ## <---- will allow all origins, read cors docs to limit
 
 ROOT_URLCONF = 'shopiifyBE.urls'
 

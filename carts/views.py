@@ -47,7 +47,7 @@ class CartItemByUserView(APIView):
 class CartItemByUserByProductView(APIView):
     def get_object(self,userId,productId):
         try:
-            return CartItem.objects.filter(user_id=userId).filter(product_id=productId).first() #ok to assume there is only one instance for each useridxproductid pair
+            return CartItem.objects.filter(user_id=userId).filter(product_id=productId)#ok to assume there is only one instance for each useridxproductid pair
         except CartItem.DoesNotExist:
             raise Http404
 
@@ -59,7 +59,7 @@ class CartItemByUserByProductView(APIView):
 
     #put
     def put(self, request, userId,productId):
-        cartitem = self.get_object(userId, productId)
+        cartitem = self.get_object(userId, productId)[0]
         serializer = CartItemSerializer(cartitem,data=request.data)
         print("serializer",serializer)
         if serializer.is_valid():

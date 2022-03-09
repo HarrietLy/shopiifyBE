@@ -74,7 +74,7 @@ class RegisterUsersView(generics.ListCreateAPIView):
         return Response(status=status.HTTP_201_CREATED)
 
 #get user by username, so we can call after logging in succesfully in the FE to get userID
-class UserView(APIView):
+class UserbyUsernameView(APIView):
     def get(self,request,username):
         try:
             user = User.objects.get(username=username)
@@ -84,7 +84,22 @@ class UserView(APIView):
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
+class UserbyUserIdView(APIView):
+    def get(self,request,userId):
+        try:
+            user = User.objects.get(id=userId)
+        except:
+            return Response({"status":'not ok'})
 
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+class UserListView(APIView):
+    def get(self,request):
+        
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
 
 #LogoutView
 # class LogoutView(APIView):
@@ -124,3 +139,15 @@ class DetailAddressView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = AddressSerializer
 
 
+class AddressByUserView(APIView):
+    def get_object(self,userId):
+        try:
+            return Address.objects.filter(user=userId)
+        except CartItem.DoesNotExist:
+            raise Http404
+
+    def get(self, request, userId):
+        addresses= self.get_object(userId)
+        serializer = AddressSerializer(addresses,many=True)
+        print("serializer",serializer)
+        return Response(serializer.data)
