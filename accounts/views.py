@@ -75,6 +75,7 @@ class RegisterUsersView(generics.ListCreateAPIView):
 
 #get user by username, so we can call after logging in succesfully in the FE to get userID
 class UserbyUsernameView(APIView):
+    
     def get(self,request,username):
         try:
             user = User.objects.get(username=username)
@@ -85,6 +86,7 @@ class UserbyUsernameView(APIView):
         return Response(serializer.data)
 
 class UserbyUserIdView(APIView):
+    
     def get(self,request,userId):
         try:
             user = User.objects.get(id=userId)
@@ -95,6 +97,7 @@ class UserbyUserIdView(APIView):
         return Response(serializer.data)
 
 class UserListView(APIView):
+    
     def get(self,request):
         
         users = User.objects.all()
@@ -129,17 +132,20 @@ class UserListView(APIView):
         
 #get  post routes for  all address
 class ListAddressView(generics.ListCreateAPIView):
+    
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
 
 
 #get, put, delete route for each address
 class DetailAddressView(generics.RetrieveUpdateDestroyAPIView):
+    
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
 
 
 class AddressByUserView(APIView):
+    
     def get_object(self,userId):
         try:
             return Address.objects.filter(user=userId)

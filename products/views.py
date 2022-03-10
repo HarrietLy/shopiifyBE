@@ -24,3 +24,4 @@ class ListProductView(generics.ListCreateAPIView):
 class DetailProductView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    

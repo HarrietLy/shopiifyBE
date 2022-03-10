@@ -1,4 +1,4 @@
-from .models import CartItem
+from .models import CartItem, Product
 from .serializers import *
 from django.http import Http404
 from rest_framework.views import APIView
@@ -11,9 +11,15 @@ class CartItemCreateView(APIView):
 
     def post(self,request):
         print('post request.data.get("product")', request.data.get("product"))
-        #TODO: add validation to check if there if ay request.data.get(product)
+        #TODO: add validation to check if there if any request.data.get(product)
         serializer = CartItemSerializer(data = request.data) # request data from FE will be in the form of {"userId":  , "productId": , quantity}
         print("serializer",serializer)
+        quantity = request.data.get("quantity")
+        product = Product.objects.get(id=request.data.get("product"))
+        if quantity > product.stock:
+            print(f"The order_quantity ({quantity}) is more than total stock ({product.stock})")
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
