@@ -40,7 +40,7 @@ SECRET_KEY = str(os.getenv('JWT_SECRET'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['shopiify-be.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
