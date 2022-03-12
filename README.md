@@ -11,7 +11,7 @@ A admin user can:
 2. Admin can see the backlog of orders, click deliver
 3. Admin can view the sales of all items
 
-Django BE: https://www.youtube.com/watch?v=Yg5zkd9nm6w
+Django BE: https://shopiify-be.herokuapp.com/admin/
 
 A normal use can:
 1. User can search page using keywords
